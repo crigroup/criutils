@@ -1,4 +1,4 @@
-raveutils Package
+criutils Package
 =================
 
 .. toctree::
