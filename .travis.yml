@@ -30,7 +30,7 @@ install:
   - catkin_init_workspace
   - cd ~/catkin_ws
   - catkin_make
-  - source devel/setup.bash
+  - source ~/catkin_ws/devel/setup.bash
   - cd ~/catkin_ws/src
   - ln -s $CI_SOURCE_PATH .
 
@@ -44,4 +44,5 @@ script:
   - cd ~/catkin_ws
   - catkin_make
   - source devel/setup.bash
-  - catkin_make test
+  - cd ~/catkin_ws/src/criutils/tests
+  - nosetests -v

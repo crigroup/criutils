@@ -14,4 +14,6 @@ catkin_python_setup()
 catkin_package()
 
 # Tests
-catkin_add_nosetests(tests/test_rviz.py)
+if (CATKIN_ENABLE_TESTING)
+  catkin_add_nosetests(tests)
+endif()
