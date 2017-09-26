@@ -2,7 +2,7 @@
 Changelog for package criutils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2017-09-26)
+------------------
 * Initial release
 * Contributors: fsuarez6
