@@ -7,7 +7,7 @@ ROS package developed by [CRI Group](http://www.ntu.edu.sg/home/cuong/),
 
 ### Documentation
 * Throughout the various files in this repository.
-* `criutils` documentation: https://crigroup.github.io/criutils/
+* Website: http://wiki.ros.org/criutils
 
 ## Travis - Continuous Integration
 
