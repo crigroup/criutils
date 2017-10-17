@@ -1,6 +1,6 @@
-************
-Installation
-************
+*******
+Install
+*******
 
 The following instructions have been tested in **Ubuntu 16.04** (Xenial), 64
 bits.
@@ -21,14 +21,30 @@ Now, install the ROS bare bones::
   sudo rosdep init
   rosdep update
 
-ROS Package installation
-========================
+Package installation
+====================
+
+You have two options to install the ``criutils`` package:
+
+Ubuntu Repositories
+-------------------
+
+Install it using Ubuntu package manager::
+
+  sudo apt-get install ros-kinetic-criutils
+
+Make sure you always source the appropriate ROS setup file, e.g::
+
+  source /opt/ros/kinetic/setup.bash
+
+From Source
+-----------
 
 Go to your ROS working directory::
 
   cd ~/catkin_ws/src
 
-Clone this repository::
+Clone the ``criutils`` source code repository::
 
   git clone https://github.com/crigroup/criutils.git
 
@@ -41,12 +57,12 @@ Now, compile your ROS workspace::
 
   cd ~/catkin_ws && catkin_make
 
-Testing the Installation
-========================
-
 Make sure you always source the appropriate ROS setup file, e.g::
 
   source ~/catkin_ws/devel/setup.bash
+
+Testing the Installation
+========================
 
 The following will run the tests of the ``criutils`` package::
 

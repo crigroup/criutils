@@ -36,8 +36,21 @@ import collections, logging, sys, warnings
 
 
 class ColoredFormatter(logging.Formatter):
-  def __init__(self, default):
-    self._default_formatter = default
+  """
+  A formatter that allows colors to be placed in the format string.
+
+  Intended to help in creating more readable logging output.
+  """
+  def __init__(self, formatter):
+    """
+    Set the format and colors the ColoredFormatter will use.
+
+    Parameters
+    ----------
+    formatter: logging.Formatter
+      Formatter instance used to convert a LogRecord to text.
+    """
+    self._default_formatter = formatter
     self._color_table = collections.defaultdict(lambda: list())
     self._color_table[logging.CRITICAL] = [ 'red' ]
     self._color_table[logging.ERROR] = [ 'red' ]
@@ -48,12 +61,31 @@ class ColoredFormatter(logging.Formatter):
     self.termcolor = termcolor
 
   def format(self, record):
+    """Customize the message format based on the log level."""
     color_options = self._color_table[record.levelno]
     message = self._default_formatter.format(record)
     return self.termcolor.colored(message, *color_options)
 
+
 def initialize_logging(spammy_level=logging.WARNING,
-                                            format_level=logging.DEBUG):
+                                                format_level=logging.DEBUG):
+  """
+  Initialize and configure loggers to disable spammy and ROS loggers
+
+  Parameters
+  ----------
+  spammy_level: int
+    Spammy and ROS loggers below this logging level are disabled.
+    Default: ``logging.WARNING``
+  format_level: int
+    Logging level to be use for this logger
+    Default: ``logging.DEBUG``
+
+  Returns
+  -------
+  base_logger: logging.RootLogger
+    The base/root logger
+  """
   if format_level == logging.DEBUG:
     format_str =  '[%(levelname)s] '
     format_str += '[%(name)s:%(filename)s:%(lineno)d]:%(funcName)s: '
@@ -99,6 +131,9 @@ def initialize_logging(spammy_level=logging.WARNING,
   return base_logger
 
 def remove_ros_logger():
+  """
+  Remove ROS logger
+  """
   logger = logging.getLogger()
   new_handlers = []
   for handler in logger.handlers:

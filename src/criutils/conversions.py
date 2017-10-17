@@ -66,7 +66,7 @@ def from_roi(msg):
 
   Parameters
   ----------
-  msg: geometry_msgs/RegionOfInterest
+  msg: sensor_msgs/RegionOfInterest
     The ROS message to be converted
 
   Returns

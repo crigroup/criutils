@@ -42,7 +42,7 @@ before_script:
 # Compile
 script:
   - cd ~/catkin_ws
-  - catkin_make
+  - catkin_make install
   - source devel/setup.bash
   - cd ~/catkin_ws/src/criutils/tests
   - nosetests -v

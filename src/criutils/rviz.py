@@ -11,6 +11,28 @@ from visualization_msgs.msg import (InteractiveMarker,
 
 def create_interactive_6dof(name, color=(1,0,0,1), frame_id='base_link',
                                                     transform=None, scale=0.05):
+  """
+  Create a 6-DoF interactive marker
+
+  Parameters
+  ----------
+  name: string
+    Marker name
+  color: array_like
+    Marker color is a 4 elements iterable to be used as RGBA color
+  frame_id: str
+    Reference frame of the marker frame. This a frame that must exist in TF
+  transform: array_like
+    Homogenous transformation (4x4) of the marker with respect to the
+    reference frame ``frame_id``
+  scale: float
+    Scale of the marker applied before the position/orientation.
+
+  Returns
+  ----------
+  int_marker: visualization_msgs.InteractiveMarker
+    The 6-DoF interactive marker
+  """
   if transform is None:
     transform = np.eye(4)
   int_marker = InteractiveMarker()
@@ -76,7 +98,33 @@ def create_interactive_6dof(name, color=(1,0,0,1), frame_id='base_link',
   return int_marker
 
 def create_interactive_mesh(name, resource, color=(1,0,0,1),
-                                frame_id='base_link', transform=None, scale=1):
+                                frame_id='base_link', transform=None, scale=1.):
+  """
+  Create an interactive marker which includes a mesh
+
+  Parameters
+  ----------
+  name: string
+    Marker name
+  resource: string
+    The format is the URI-form used by
+    `resource_retriever <http://wiki.ros.org/resource_retriever>`_, including
+    the `package://` syntax.
+  color: array_like
+    Marker color is a 4 elements iterable to be used as RGBA color
+  frame_id: str
+    Reference frame of the marker frame. This a frame that must exist in TF
+  transform: array_like
+    Homogenous transformation (4x4) of the marker with respect to the
+    reference frame ``frame_id``
+  scale: float
+    Scale of the marker applied before the position/orientation.
+
+  Returns
+  ----------
+  int_marker: visualization_msgs.InteractiveMarker
+    The interactive mesh marker
+  """
   if transform is None:
     transform = np.eye(4)
   # Start with the interactive control
@@ -99,6 +147,38 @@ def create_interactive_mesh(name, resource, color=(1,0,0,1),
 
 def create_mesh_marker(mrkid, name, resource, color=(1,0,0,1), ns='',
                                 frame_id='base_link', transform=None, scale=1):
+  """
+  Create a mesh marker
+
+  Parameters
+  ----------
+  mrkid: int
+   Unique id assigned to this marker. It is your responsibility to keep these
+   unique within your namespace.
+  name: string
+    Marker name
+  resource: string
+    The format is the URI-form used by
+    `resource_retriever <http://wiki.ros.org/resource_retriever>`_, including
+    the `package://` syntax.
+  color: array_like
+    Marker color is a 4 elements iterable to be used as RGBA color
+  ns: str
+    Namespace for these markers. This plus the ``mrkid`` form a unique
+    identifier.
+  frame_id: str
+    Reference frame of the marker frame. This a frame that must exist in TF
+  transform: array_like
+    Homogenous transformation (4x4) of the marker with respect to the
+    reference frame ``frame_id``
+  scale: float
+    Scale of the marker applied before the position/orientation.
+
+  Returns
+  ----------
+  marker: visualization_msgs.Marker
+    The mesh marker
+  """
   if transform is None:
     transform = np.eye(4)
   marker = Marker()
@@ -116,6 +196,34 @@ def create_mesh_marker(mrkid, name, resource, color=(1,0,0,1), ns='',
 
 def create_points_marker(mrkid, points, size=1e-3, color=(1,0,0,1), ns='',
                                           frame_id='base_link', transform=None):
+  """
+  Create a marker of points
+
+  Parameters
+  ----------
+  mrkid: int
+   Unique id assigned to this marker. It is your responsibility to keep these
+   unique within your namespace.
+  points: list
+    The list of XYZ points
+  size: float
+    Point width and height (pixels)
+  color: array_like
+    Marker color is a 4 elements iterable to be used as RGBA color
+  ns: str
+    Namespace for these markers. This plus the ``mrkid`` form a unique
+    identifier.
+  frame_id: str
+    Reference frame of the marker frame. This a frame that must exist in TF
+  transform: array_like
+    Homogenous transformation (4x4) of the marker with respect to the
+    reference frame ``frame_id``
+
+  Returns
+  ----------
+  marker: visualization_msgs.Marker
+    The marker of points
+  """
   if transform is None:
     transform = np.eye(4)
   marker = Marker()
@@ -135,6 +243,35 @@ def create_points_marker(mrkid, points, size=1e-3, color=(1,0,0,1), ns='',
 
 def create_text_marker(mrkid, text, size=0.02, color=(1,0,0,1), ns='',
                                           frame_id='base_link', position=None):
+  """
+  Create a text marker. The text always appears oriented correctly to the view.
+
+  Parameters
+  ----------
+  mrkid: int
+   Unique id assigned to this marker. It is your responsibility to keep these
+   unique within your namespace.
+  text: string
+    The marker text
+  size: float
+    Specifies the height of an uppercase "A" (meters)
+  color: array_like
+    Marker color is a 4 elements iterable to be used as RGBA color
+  ns: str
+    Namespace for these markers. This plus the ``mrkid`` form a unique
+    identifier.
+  frame_id: str
+    Reference frame of the marker frame. This a frame that must exist in TF
+  position: array_like
+    XYZ position of the text marker with respect to the reference frame
+    ``frame_id``. If it's not indicated, the text will be place at
+    :math:`[0, 0, 0]`
+
+  Returns
+  ----------
+  marker: visualization_msgs.Marker
+    The text marker
+  """
   transform = np.eye(4)
   if position is not None:
     transform[:3,3] = position
@@ -152,6 +289,17 @@ def create_text_marker(mrkid, text, size=0.02, color=(1,0,0,1), ns='',
   return marker
 
 def get_safe_stamp():
+  """
+  Get a safe stamp.
+
+  It's useful when ROS time hasn't been initialized then this will return a
+  ``rospy.Time`` equal to zero.
+
+  Returns
+  ----------
+  stamp: rospy.Time
+    The `safe` stamp
+  """
   try:
     stamp = rospy.Time.now()
   except rospy.ROSInitException:
