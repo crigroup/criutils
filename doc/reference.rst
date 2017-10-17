@@ -1,6 +1,6 @@
-*****************
-API Documentation
-*****************
+*********
+Reference
+*********
 
 Conversions
 ===========
@@ -11,15 +11,23 @@ Conversions
    :show-inheritance:
 
 Logger
-==========
+======
 
 .. automodule:: criutils.logger
    :members:
    :undoc-members:
    :show-inheritance:
 
+Parameter Server
+================
+
+.. automodule:: criutils.parameter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 RViz
-========
+====
 
 .. automodule:: criutils.rviz
    :members:
