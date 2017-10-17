@@ -2,8 +2,8 @@
 Changelog for package criutils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.1 (2017-10-17)
+------------------
 * Complete documentation
 * Complete tests
 * Add parameter module
