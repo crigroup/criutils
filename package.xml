@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>criutils</name>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <description>The criutils package</description>
 
   <author email="fsuarez6@gmail.com">Francisco Suarez-Ruiz</author>
@@ -25,7 +25,6 @@
   <exec_depend>visualization_msgs</exec_depend>
 
   <doc_depend>python-sphinx</doc_depend>
-  <doc_depend>python-sphinx-rtd-theme</doc_depend>
   <doc_depend>rosdoc_lite</doc_depend>
 
   <export>

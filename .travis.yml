@@ -18,8 +18,10 @@ before_install:
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin
-  - source /opt/ros/$ROS_DISTRO/setup.bash
+  # Install docs tools
+  - sudo apt-get install python-sphinx ros-$ROS_DISTRO-rosdoc-lite
   # Prepare rosdep to install dependencies.
+  - source /opt/ros/$ROS_DISTRO/setup.bash
   - sudo rosdep init
   - rosdep update
 
@@ -44,5 +46,9 @@ script:
   - cd ~/catkin_ws
   - catkin_make install
   - source devel/setup.bash
-  - cd ~/catkin_ws/src/criutils/tests
-  - nosetests -v
+  # Run the tests
+  - catkin_make run_tests
+  - catkin_test_results
+  # Build the docs
+  - cd ~/catkin_ws/src/criutils
+  - rosdoc_lite .
