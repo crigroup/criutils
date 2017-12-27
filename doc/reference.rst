@@ -2,6 +2,14 @@
 Reference
 *********
 
+Array manipulation
+==================
+
+.. automodule:: criutils.array
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Conversions
 ===========
 

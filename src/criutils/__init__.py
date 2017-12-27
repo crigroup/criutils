@@ -1,8 +1,11 @@
 #!/usr/bin/env python
-import conversions
-import logger
-import parameter
-import rviz
+from .version import __version__
+from . import array
+from . import conversions
+from . import logger
+from . import parameter
+from . import rviz
+from . import vision
 
 # Global scope availability
-from parameter import read_parameter
+from .parameter import read_parameter

@@ -8,6 +8,25 @@ from geometry_msgs.msg import (Point, Quaternion, Pose, Vector3, Transform,
 from sensor_msgs.msg import RegionOfInterest
 
 
+def from_dict(transform_dict):
+  """
+  Converts a dictionary with the fields `rotation` and `translation`
+  into a homogeneous transformation.
+
+  Parameters
+  ----------
+  transform_dict:  dict
+    The dictionary to be converted
+
+  Returns
+  -------
+  array: array_like
+    The resulting numpy array
+  """
+  T = tr.quaternion_matrix(np.array(transform_dict['rotation']))
+  T[:3,3] = np.array(transform_dict['translation'])
+  return T
+
 def from_point(msg):
   """
   Convert a `geometry_msgs/Point` ROS message into a numpy array.

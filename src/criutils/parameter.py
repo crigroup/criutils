@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import rospy
 import logging
-import criutils
 import rostopic
 from .logger import initialize_logging
 
