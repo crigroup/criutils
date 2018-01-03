@@ -35,6 +35,8 @@ install:
   - source ~/catkin_ws/devel/setup.bash
   - cd ~/catkin_ws/src
   - ln -s $CI_SOURCE_PATH .
+  # This is required only for installing from source
+  - git clone https://github.com/crigroup/baldor.git
 
 # Install all dependencies
 before_script:
