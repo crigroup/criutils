@@ -24,6 +24,8 @@ before_install:
   - source /opt/ros/$ROS_DISTRO/setup.bash
   - sudo rosdep init
   - rosdep update
+  # Install coveralls
+  - pip install coveralls --user
 
 # Create a catkin workspace with the package under integration.
 install:
@@ -51,6 +53,11 @@ script:
   # Run the tests
   - catkin_make run_tests
   - catkin_test_results
-  # Build the docs
   - cd ~/catkin_ws/src/criutils
+  # Build the docs
   - rosdoc_lite .
+  # Run the tests with coverage
+  - nosetests tests/ --with-coverage --cover-package=criutils -v
+
+after_success:
+  - coveralls
