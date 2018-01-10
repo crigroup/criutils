@@ -3,6 +3,7 @@ from .version import __version__
 from . import array
 from . import conversions
 from . import logger
+from . import misc
 from . import parameter
 from . import rviz
 from . import vision
