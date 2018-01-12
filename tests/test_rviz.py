@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import unittest
+import numpy as np
 import criutils as cu
 
 
@@ -19,6 +20,7 @@ class Test_rviz(unittest.TestCase):
 
   def test_create_text_marker(self):
     marker = cu.rviz.create_text_marker(1, 'text')
+    marker = cu.rviz.create_text_marker(1, 'text', position=np.random.rand(3))
 
   def test_get_safe_stamp(self):
     stamp = cu.rviz.get_safe_stamp()

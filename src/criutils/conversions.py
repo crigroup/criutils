@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 import rospy
 import numpy as np
-import tf.transformations as tr
+import baldor as br
 # Messages
 from geometry_msgs.msg import (Point, Quaternion, Pose, Vector3, Transform,
                                                                         Wrench)
@@ -23,7 +23,7 @@ def from_dict(transform_dict):
   array: array_like
     The resulting numpy array
   """
-  T = tr.quaternion_matrix(np.array(transform_dict['rotation']))
+  T = br.quaternion.to_transform(np.array(transform_dict['rotation']))
   T[:3,3] = np.array(transform_dict['translation'])
   return T
 
@@ -58,7 +58,7 @@ def from_pose(msg):
   array: np.array
     The resulting numpy array
   """
-  T = tr.quaternion_matrix(from_quaternion(msg.orientation))
+  T = br.quaternion.to_transform(from_quaternion(msg.orientation))
   T[:3,3] = from_point(msg.position)
   return T
 
@@ -76,7 +76,7 @@ def from_quaternion(msg):
   array: np.array
     The resulting numpy array
   """
-  return np.array([msg.x, msg.y, msg.z, msg.w])
+  return np.array([msg.w, msg.x, msg.y, msg.z])
 
 def from_roi(msg):
   """
@@ -112,7 +112,7 @@ def from_transform(msg):
   array: np.array
     The resulting numpy array
   """
-  T = tr.quaternion_matrix(from_quaternion(msg.rotation))
+  T = br.quaternion.to_transform(from_quaternion(msg.rotation))
   T[:3,3] = from_vector3(msg.translation)
   return T
 
@@ -153,7 +153,7 @@ def from_wrench(msg):
 
 def to_quaternion(array):
   """
-  Convert a numpy array XYZW into a `geometry_msgs/Quaternion` ROS message.
+  Convert a numpy array WXYZ into a `geometry_msgs/Quaternion` ROS message.
 
   Parameters
   ----------
@@ -165,7 +165,7 @@ def to_quaternion(array):
   msg: geometry_msgs/Quaternion
     The resulting ROS message
   """
-  return Quaternion(*array)
+  return Quaternion(array[1], array[2], array[3], array[0])
 
 def to_point(array):
   """
@@ -198,9 +198,8 @@ def to_pose(T):
   msg: geometry_msgs/Pose
     The resulting ROS message
   """
-  pos = Point(*T[:3,3])
-  quat = Quaternion(*tr.quaternion_from_matrix(T))
-  return Pose(pos, quat)
+  q = br.transform.to_quaternion(T)
+  return Pose(to_point(T[:3,3]), to_quaternion(q))
 
 def to_roi(top_left, bottom_right):
   """
@@ -242,7 +241,8 @@ def to_transform(T):
     The resulting ROS message
   """
   translation = Vector3(*T[:3,3])
-  rotation = Quaternion(*tr.quaternion_from_matrix(T))
+  q = br.transform.to_quaternion(T)
+  rotation = to_quaternion(q)
   return Transform(translation, rotation)
 
 def to_vector3(array):

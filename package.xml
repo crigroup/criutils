@@ -12,9 +12,9 @@
   <url type="bugtracker">https://github.com/crigroup/criutils/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <depend>rosbash</depend>
-  <depend>rospy</depend>
 
+  <exec_depend>baldor</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>python-numpy</exec_depend>
   <exec_depend>python-termcolor</exec_depend>
@@ -22,11 +22,9 @@
   <exec_depend>rostopic</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  <exec_depend>tf</exec_depend>
   <exec_depend>visualization_msgs</exec_depend>
 
   <doc_depend>python-numpydoc</doc_depend>
-  <doc_depend>python-sphinx</doc_depend>
   <doc_depend>rosdoc_lite</doc_depend>
 
   <export>
