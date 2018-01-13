@@ -1,5 +1,5 @@
 # criutils
-[![Build Status](https://travis-ci.org/crigroup/criutils.svg?branch=master)](https://travis-ci.org/crigroup/criutils)
+[![Build Status](https://travis-ci.org/crigroup/criutils.svg?branch=master)](https://travis-ci.org/crigroup/criutils) [![Coverage Status](https://coveralls.io/repos/github/crigroup/criutils/badge.svg)](https://coveralls.io/github/crigroup/criutils)
 
 ROS package developed by [CRI Group](http://www.ntu.edu.sg/home/cuong/),
 [Nanyang Technological University, Singapore](http://www.ntu.edu.sg).

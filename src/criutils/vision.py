@@ -13,7 +13,23 @@ ORANGE    = (0,140,255)
 WHITE     = (255,255,255)
 
 
-def draw_circles(image, circles, color=(0,255,0), thickness=1, add_index=False):
+def draw_circles(image, circles, color=(0,255,0), thickness=1):
+  """
+  Draw simple or filled circles with a given center and radius.
+
+  Parameters
+  ----------
+  image: array_like
+    Image where the circles are drawn
+  circles: list
+    List with the circle information. Each item must be
+                                                  `(center_u, center_v, radius)`
+  color: tuple
+    Circles color
+  thickness: float
+    Thickness of the circle outline. Negative thickness means that a filled
+    circle is to be drawn.
+  """
   for circle in np.uint16(np.around(circles)):
     center = tuple(circle[:2])
     radius = circle[2]

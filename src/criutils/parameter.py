@@ -21,7 +21,7 @@ def read_parameter(name, default):
   Returns
   ----------
   value: Object
-    If found, the read parameter. Otherwise, ``default`` is returned.
+    If found, the read parameter. Otherwise, `default` is returned.
   """
   # Check roscore is running
   try:
