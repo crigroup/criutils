@@ -27,7 +27,7 @@ def read_parameter(name, default):
   try:
     rostopic.get_topic_class('/rosout')
     rosmaster_running = True
-  except rostopic.ROSTopicIOException:
+  except (rostopic.ROSTopicIOException, ValueError):
     rosmaster_running = False
   # Act accordingly
   value = default
