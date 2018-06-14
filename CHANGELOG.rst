@@ -2,8 +2,8 @@
 Changelog for package criutils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.3 (2018-06-14)
+------------------
 * Add automatic TF broadcaster node
 * Add missing dependency to OpenCV
 * Add and improve test coverage
