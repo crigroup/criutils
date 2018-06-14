@@ -11,3 +11,9 @@ catkin_package()
 if (CATKIN_ENABLE_TESTING)
   catkin_add_nosetests(tests)
 endif()
+
+# Install python scripts
+catkin_install_python(
+  PROGRAMS
+    scripts/tf_transform_broadcaster.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
