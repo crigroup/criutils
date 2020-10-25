@@ -2,8 +2,8 @@
 Changelog for package criutils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.4 (2020-10-25)
+------------------
 * Add support for ROS noetic and clean up
 * Contributors: fsuarez6
 
