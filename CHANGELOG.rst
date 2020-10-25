@@ -2,6 +2,11 @@
 Changelog for package criutils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add support for ROS noetic and clean up
+* Contributors: fsuarez6
+
 0.1.3 (2018-06-14)
 ------------------
 * Add automatic TF broadcaster node

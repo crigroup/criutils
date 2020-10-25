@@ -32,111 +32,116 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import collections, logging, sys, warnings
+import collections
+import logging
+import sys
+import warnings
 
 
 class ColoredFormatter(logging.Formatter):
-  """
-  A formatter that allows colors to be placed in the format string.
-
-  Intended to help in creating more readable logging output.
-  """
-  def __init__(self, formatter):
     """
-    Set the format and colors the ColoredFormatter will use.
+    A formatter that allows colors to be placed in the format string.
 
-    Parameters
-    ----------
-    formatter: logging.Formatter
-      Formatter instance used to convert a LogRecord to text.
+    Intended to help in creating more readable logging output.
     """
-    self._default_formatter = formatter
-    self._color_table = collections.defaultdict(lambda: list())
-    self._color_table[logging.CRITICAL] = [ 'red' ]
-    self._color_table[logging.ERROR] = [ 'red' ]
-    self._color_table[logging.WARNING] = [ 'yellow' ]
-    self._color_table[logging.DEBUG] = [ 'green' ]
-    # Import termcolor now to fail-fast.
-    import termcolor
-    self.termcolor = termcolor
 
-  def format(self, record):
-    """Customize the message format based on the log level."""
-    color_options = self._color_table[record.levelno]
-    message = self._default_formatter.format(record)
-    return self.termcolor.colored(message, *color_options)
+    def __init__(self, formatter):
+        """
+        Set the format and colors the ColoredFormatter will use.
+
+        Parameters
+        ----------
+        formatter: logging.Formatter
+          Formatter instance used to convert a LogRecord to text.
+        """
+        self._default_formatter = formatter
+        self._color_table = collections.defaultdict(lambda: list())
+        self._color_table[logging.CRITICAL] = ['red']
+        self._color_table[logging.ERROR] = ['red']
+        self._color_table[logging.WARNING] = ['yellow']
+        self._color_table[logging.DEBUG] = ['green']
+        # Import termcolor now to fail-fast.
+        import termcolor
+        self.termcolor = termcolor
+
+    def format(self, record):
+        """Customize the message format based on the log level."""
+        color_options = self._color_table[record.levelno]
+        message = self._default_formatter.format(record)
+        return self.termcolor.colored(message, *color_options)
 
 
 def initialize_logging(spammy_level=logging.WARNING,
-                                                format_level=logging.DEBUG):
-  """
-  Initialize and configure loggers to disable spammy and ROS loggers
+                       format_level=logging.DEBUG):
+    """
+    Initialize and configure loggers to disable spammy and ROS loggers
 
-  Parameters
-  ----------
-  spammy_level: int
-    Spammy and ROS loggers below this logging level are disabled.
-    Default: ``logging.WARNING``
-  format_level: int
-    Logging level to be use for this logger
-    Default: ``logging.DEBUG``
+    Parameters
+    ----------
+    spammy_level: int
+      Spammy and ROS loggers below this logging level are disabled.
+      Default: ``logging.WARNING``
+    format_level: int
+      Logging level to be use for this logger
+      Default: ``logging.DEBUG``
 
-  Returns
-  -------
-  base_logger: logging.RootLogger
-    The base/root logger
-  """
-  if format_level == logging.DEBUG:
-    format_str =  '[%(levelname)s] '
-    format_str += '[%(name)s:%(filename)s:%(lineno)d]:%(funcName)s: '
-    format_str += '%(message)s'
-  elif format_level == logging.INFO:
-    format_str = '[%(levelname)s] [%(name)s]: %(message)s'
-  else:
-    format_str = logging.BASIC_FORMAT
-  formatter = logging.Formatter(format_str)
-  # Remove all of the existing handlers.
-  base_logger = logging.getLogger()
-  for handler in list(base_logger.handlers):
-    base_logger.removeHandler(handler)
-  # Add the custom handler
-  handler = logging.StreamHandler(sys.stdout)
-  handler.setLevel(logging.DEBUG)
-  handler.setFormatter(formatter)
-  base_logger.addHandler(handler)
-  base_logger.setLevel(logging.INFO)
-  # Colorize logging output if the termcolor package is available
-  try:
-    color_formatter = ColoredFormatter(formatter)
-    handler.setFormatter(color_formatter)
-  except ImportError:
-    logging.warning('Install termcolor to colorize log messages.')
-  # Disable spammy and ROS loggers
-  spammy_logger_names = [
-    'rospy.core',
-    'rospy.topics',
-    'openravepy.databases',
-    'openravepy.inversekinematics',
-    'openravepy.databases.inversekinematics',
-    'trimesh'
-  ]
-  for spammy_logger_name in spammy_logger_names:
-    spammy_logger = logging.getLogger(spammy_logger_name)
-    spammy_logger.setLevel(spammy_level)
-  # Hide ikfast warnings
-  spammy_logger = logging.getLogger('openravepy.ikfast')
-  spammy_logger.setLevel(logging.FATAL)
-  # Enable deprecation warnings, which are off by default in Python 2.7
-  warnings.simplefilter('default')
-  return base_logger
+    Returns
+    -------
+    base_logger: logging.RootLogger
+      The base/root logger
+    """
+    if format_level == logging.DEBUG:
+        format_str = '[%(levelname)s] '
+        format_str += '[%(name)s:%(filename)s:%(lineno)d]:%(funcName)s: '
+        format_str += '%(message)s'
+    elif format_level == logging.INFO:
+        format_str = '[%(levelname)s] [%(name)s]: %(message)s'
+    else:
+        format_str = logging.BASIC_FORMAT
+    formatter = logging.Formatter(format_str)
+    # Remove all of the existing handlers.
+    base_logger = logging.getLogger()
+    for handler in list(base_logger.handlers):
+        base_logger.removeHandler(handler)
+    # Add the custom handler
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(formatter)
+    base_logger.addHandler(handler)
+    base_logger.setLevel(logging.INFO)
+    # Colorize logging output if the termcolor package is available
+    try:
+        color_formatter = ColoredFormatter(formatter)
+        handler.setFormatter(color_formatter)
+    except ImportError:
+        logging.warning('Install termcolor to colorize log messages.')
+    # Disable spammy and ROS loggers
+    spammy_logger_names = [
+        'rospy.core',
+        'rospy.topics',
+        'openravepy.databases',
+        'openravepy.inversekinematics',
+        'openravepy.databases.inversekinematics',
+        'trimesh'
+    ]
+    for spammy_logger_name in spammy_logger_names:
+        spammy_logger = logging.getLogger(spammy_logger_name)
+        spammy_logger.setLevel(spammy_level)
+    # Hide ikfast warnings
+    spammy_logger = logging.getLogger('openravepy.ikfast')
+    spammy_logger.setLevel(logging.FATAL)
+    # Enable deprecation warnings, which are off by default in Python 2.7
+    warnings.simplefilter('default')
+    return base_logger
+
 
 def remove_ros_logger():
-  """
-  Remove ROS logger
-  """
-  logger = logging.getLogger()
-  new_handlers = []
-  for handler in logger.handlers:
-    if type(handler).__name__ != 'RosStreamHandler':
-      new_handlers.append(handler)
-  logger.handlers = new_handlers
+    """
+    Remove ROS logger
+    """
+    logger = logging.getLogger()
+    new_handlers = []
+    for handler in logger.handlers:
+        if type(handler).__name__ != 'RosStreamHandler':
+            new_handlers.append(handler)
+    logger.handlers = new_handlers
